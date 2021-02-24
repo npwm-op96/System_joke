@@ -9,9 +9,6 @@ module.exports = function(app) {
     );
     next();
   });
-
-//   app.get("/api/test/all", controller.allAccess);
-
   app.post(
     "/api/joke",
     [authJwt.verifyToken],

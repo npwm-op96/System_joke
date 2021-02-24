@@ -3,6 +3,7 @@ const db = require("../models");
 const Joke = db.joke;
 const Op = db.Sequelize.Op;
 exports.create = (req, res) => {
+    console.log(req.body)
     const joke = {
     joke: req.body.joke,
     id_user: req.body.id_user,
@@ -13,11 +14,11 @@ exports.create = (req, res) => {
     })
   };
   exports.findjoke = (req, res) => {
-    const id = req.param.id_user
+    const id = req.param.id
     console.log(id)
     Joke.findAll({
         where: {
-          id_user: {
+          id: {
             [Op.or]: id
           }
         }
@@ -32,21 +33,24 @@ exports.create = (req, res) => {
         where: {
         id:id
       }})
-    .then(data=>{
-        res.json({message:"delete success"})
-    })
+      Joke.findAll({id_user:id})
+      .then(data=>{
+          res.send(data)
+      })
   };
   exports.upstatus = (req, res) => {
     const id = req.params.id
     const status = req.body.status
 
     console.log(id)
+    
     Joke.update({status:status}, {
         where: { id:id }
     })
+  
+    Joke.findAll({id_user:id})
     .then(data=>{
-        res.json({message:" update status success",
-        data:data})
+        res.send(data)
     })
   };
   

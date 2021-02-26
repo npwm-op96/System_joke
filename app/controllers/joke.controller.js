@@ -46,11 +46,8 @@ exports.create = (req, res) => {
     
     Joke.update({status:status}, {
         where: { id:id }
-    })
-  
-    Joke.findAll({id_user:id})
-    .then(data=>{
-        res.send(data)
+    }).then(data=>{
+      res.send(data)  
     })
   };
   
